@@ -308,8 +308,6 @@ getgenv().ConfigsKaitun = {
 }
 License = "hLv5vGDrHC1cR2eyIaPkonhV0CmU0L12"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
--- ?? Auto Harvest Sunbulb + Auto Craft Seed Pack/Chest + Claim + Fairy
-
 local Players = game:GetService('Players')
 local Rep = game:GetService('ReplicatedStorage')
 local CollectionService = game:GetService('CollectionService')
@@ -323,9 +321,9 @@ local CraftRemote = Rep.GameEvents.CraftingGlobalObjectService
 local bench =
     workspace.Interaction.UpdateItems.FairyGenius.FairyWorldCraftingWorkBench
 
--- ?? Config
-local INTERVAL = 50 -- giây gi?a m?i vòng harvest
-local LIMIT = 20 -- s? trái t?i da m?i vòng
+-- ⚙️ Config
+local INTERVAL = 50 -- giây giữa mỗi vòng harvest
+local LIMIT = 20 -- số trái tối đa mỗi vòng
 local FIRE_DELAY = 2
 local SUBMIT_DELAY = 1
 local USE_FARM_ONLY = true
@@ -341,7 +339,7 @@ pcall(function()
     end
 end)
 
--- Ki?m tra CollectPrompt tag
+-- Kiểm tra CollectPrompt tag
 local function hasCollectTag(obj)
     if type(obj.HasTag) == 'function' then
         local ok, res = pcall(function()
@@ -354,7 +352,7 @@ local function hasCollectTag(obj)
     return CollectionService:HasTag(obj, 'CollectPrompt')
 end
 
--- ? Harvest Sunbulb
+-- ✅ Harvest Sunbulb
 local function harvestSunbulb(limit)
     local collected = 0
     local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
@@ -380,7 +378,7 @@ local function harvestSunbulb(limit)
     end
 end
 
--- ?? UUID
+-- 🔑 UUID
 local function getUUID(itemName)
     for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
         if string.find(item.Name, itemName) then
@@ -394,7 +392,7 @@ local function getUUID(itemName)
     end
 end
 
--- Ð?m item trong balo
+-- Đếm item trong balo
 local function countItem(itemName)
     local count = 0
     for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
@@ -405,7 +403,7 @@ local function countItem(itemName)
     return count
 end
 
--- ?? Craft Enchanted Seed Pack
+-- 🧪 Craft Enchanted Seed Pack
 local function craftSeedPack()
     CraftRemote:FireServer(
         'SetRecipe',
@@ -439,7 +437,7 @@ local function craftSeedPack()
     CraftRemote:FireServer('Claim', bench, 'FairyWorldCraftingWorkBench', 1)
 end
 
--- ?? Craft Enchanted Chest
+-- 🧰 Craft Enchanted Chest
 local function craftChest()
     CraftRemote:FireServer(
         'SetRecipe',
@@ -474,7 +472,7 @@ local function craftChest()
     CraftRemote:FireServer('Claim', bench, 'FairyWorldCraftingWorkBench', 1)
 end
 
--- ?? Harvest Glimmering (ch? n?u tier < 5)
+-- 🧿 Harvest Glimmering (chỉ nếu tier < 5)
 local function getCurrentTier()
     local data = DataService:GetData()
     if not data or not data.FairyQuests then
@@ -508,7 +506,7 @@ local function harvestGlimmering(limit)
     end
 end
 
--- ?? Auto interact Fairy (1 -> 10)
+-- 🧚 Auto interact Fairy (1 -> 10)
 task.spawn(function()
     while true do
         for i = 1, 10 do
@@ -525,7 +523,7 @@ task.spawn(function()
     end
 end)
 
--- ?? Main loop
+-- 🔄 Main loop
 while task.wait(INTERVAL) do
     harvestSunbulb(LIMIT)
 
@@ -656,14 +654,19 @@ task.spawn(function()
     end
 end)
 
--- Task 3: Spam lệnh mỗi 60s (giữ lại print)
+-- Task 3: Spam lệnh mỗi 60s (giữ lại print + chuẩn args)
 task.spawn(function()
     while task.wait(60) do
-        Events.FairyService.FairySubmitAllJar:FireServer()
-        print('📦 FairySubmitAllJar đã gửi!')
+        -- Nộp tất cả fairy jar
+        game:GetService("ReplicatedStorage").GameEvents.FairyService.FairySubmitAllJar:FireServer()
+        print("📦 FairySubmitAllJar đã gửi!")
 
-        local args = { 'Enchanted Chest', 2 }
-        Events.BuyEventShopStock:FireServer(unpack(args))
-        print('💎 Đã mua Enchanted Chest x2!')
+        -- Mua Enchanted Chest x2
+        local args = {
+            [1] = "Enchanted Chest",
+            [2] = 2,
+        }
+        game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock:FireServer(unpack(args))
+        print("💎 Đã mua Enchanted Chest x2!")
     end
 end)
