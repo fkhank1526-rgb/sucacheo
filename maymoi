@@ -216,9 +216,10 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-		["Squirrel"] =	{ 5, 100, 4, true },
+		["Squirrel"] =	{ 5, 100, 3, true },
                 ["Brown Mouse"] = { 3, 100, 4, true },
                 ["Grey Mouse"] = { 3, 100, 5, true },
+				["Ostrich"] = { 3, 100, 2, true },
 		["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
@@ -227,9 +228,10 @@ getgenv().ConfigsKaitun = {
                 ["Sunny-Side Chicken"] = { 5, 100, 2 },
                 ["Starfish"] = { 5, 100, 3 },
 		["Squirrel"] =	{ 5, 100, 5 },
-            	["Brown Mouse"] = { 3, 100, 6 },
-                ["Grey Mouse"] = { 3, 100, 7 },
-                ["Rooster"] = { 4, 100, 4 },
+				["Ostrich"] = { 3, 100, 6 },
+            	["Brown Mouse"] = { 3, 100, 7 },
+                ["Grey Mouse"] = { 3, 100, 8 },
+                ["Rooster"] = { 2, 100, 4 },
 			},
 		},
 
