@@ -1,749 +1,125 @@
-getgenv().ConfigsKaitun = {
-	Beta_Fix_Data_Sync = true,
+-- SCRIPT G?P - KHÔNG CH?NH S?A GÌ
 
-	NoDeletePlayer = false,
+-- Ð?i game t?i
+wait(5)
 
-	["Block Pet Gift"] = true,
+-- D?ch v? và bi?n co b?n
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = Players.LocalPlayer
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+-- Ch? các Module c?n thi?t
+local ClientData = ReplicatedStorage:WaitForChild("ClientModules"):WaitForChild("Core"):WaitForChild("ClientData")
 
-	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+-- Script 2: Auto farm + webhook
+task.spawn(function()
+    setfpscap(3)
+    script_key = "CqyciFlfLYGjwojrmVOfqIfhdlmveFvx"
+    getgenv().Config = {
+        ["PetFarmAutoSwitchFullGrown"] = false,
+        ["PetFarmActive"] = false,
+        ["EggFarmActive"] = false,
+        ["LitePetFarmActive"] = true,
+        ["Blur_username"] = false,
+        ["Blazing_Lion_Log"] = true,
+        ["DiscordId"] = "710726834240618526",
+        ["Webhook"] = "https://discord.com/api/webhooks/1286202963353931817/AeMMxeR_NKH9-PtdZx9bUjF3LfyyEw0fK4FR9c-Eg3It6Bay75oUVs-5n2Vnzx8j9A7y",
+    }
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/66567bfd337b57eb059b58dbe1badb89.lua"))()
+end)
 
-	["Rejoin When Update"] = true,
+-- Hàm l?y s? potion
+function GetPotions()
+    local Foods = {}
+    for l,o in pairs(require(ClientData).get_data()[LocalPlayer.Name].inventory.food) do
+        if o.id == "pet_age_potion" then
+            table.insert(Foods, l)
+        end
+    end
+    return #Foods
+end
 
-	["Auto Trade Pet"] = { -- not done yet bro dont use
-		["Enabled"] = false, 
-		["Target"] =  { -- multi users
-			"username1",
-			"username2",
-		},
-		["Pet To Send"] = {
-			
-		}
-	},
+-- Hàm l?y ti?n s? ki?n
+function GetEventCurrency()
+    return require(ClientData).get_data()[LocalPlayer.Name][require(ReplicatedStorage.SharedModules.SharedDB.AltCurrencyData)["name"]] or 0
+end
 
-	["Limit Tree"] = {
-		["Limit"] = 345,
-		["Destroy Until"] = 321,
+-- Hàm l?y bucks (kèm pcall d? tránh l?i)
+function GetBucks()
+    local success, result = pcall(function()
+        return require(ClientData).get_data()[LocalPlayer.Name].money
+    end)
+    if success and result ~= nil then
+        return result
+    else
+        return nil
+    end
+end
 
-		["Safe Tree"] = {
-	"Moon Blossom",
-			"Bone Blossom",
-			"Moon Melon",
-			"Maple Apple",
-			"Moon Mango",
-			"Dragon Pepper",
-			"Elephant Ears",
-			"Fossilight",
-			"Princess Thorn",
-			-- for the event
-	        ["Bamboo"] = 10,
-			["Coconut"] = 5,
-			["Mushroom"] = 5,
-			["Glowthorn"] = 5,
-			["Tomato"] = 5,
-			["Pumpkin"] = 5,
-			["Pepper"] = 5,
-			["Cacao"] = 5,
-			["Apple"] = 5,
-			["Wispwing"] = 10,
-			["Romanesco"] = 10,
-			["Elder Strawberry"] = 10,
-			["Burning Bud"] = 10,
-			["Giant Pinecone"] = 5,
-			["Corn"] = 5,
-			["Sugar Apple"] = 5,
-			["Ember Lily"] = 5,
-			["Dragon Fruit"] = 5,
-			["Sunbulb"] = 10,
-			["Orange Tulip"] = 10,
-			["Blueberry"] = 5,
-			["Watermelon"] = 5,
-			["Mango"] = 5,
-			["Cactus"] = 5,
-			["Strawberry"] = 5,
-			["Beanstalk"] = 10,
-			["Lightshoot"] = 5,
-			["Grape"] = 5,
-			["Daffodil"] = 5,
-			["Aurora Vine"] = 10,
-			["Aetherfruit"] = 10,
-		}
-	},
+-- Hàm l?y t?ng stats
+local function GetStats()
+    if not game:IsLoaded() then
+        return ""
+    end
+    local currentData = {
+        potions = GetPotions(),
+        event_currency = GetEventCurrency(),
+        bucks = GetBucks(),
+    }
+    return currentData
+end
 
-	Seed = {
-		Buy = {
-			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any fruit u need to place
-				"Carrot",
-			}
-		},
-		Place = {
-			Mode = "Lock", -- Select , Lock
-			Select = {
-				"Carrot"
-			},
-			Lock = {
-				"Maple Apple",
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
-				"Moon Melon",
-				"Easter Egg",
-				"Moon Mango",
-				"Bone Blossom",
-				"Fossilight",
-				"Strawberry",
-			}
-		}
-	},
+-- Script 1: Ki?m tra d? di?u ki?n ghi file
+function CheckAndWrite()
+    while true do
+        local potions = GetPotions()
+        local bucks = GetBucks()
 
-	["Seed Pack"] = {
-		Locked = {
-				"Enchanted Seed Pack",
-		}
-	},
+        if potions >= 100 and bucks and bucks >= 60000 then
+            writefile(LocalPlayer.Name..".txt", "Completed-AccHoanThanh-Potion+Money")
+        end
 
-	Events = {
-		["Fairy Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
-			Rewards_Item = { -- top mean select first
-				"Enchanted Egg",
-				"Enchanted Seed Pack",
-				"FairyPoints",
-				"Mutation Spray Glimmering",
-				"Pet Shard Glimmering",
-			    "Fairy Targeter",
-			},
-			Upgrade = {
-				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
-				Order = { -- top upgrade first, not put mean not upgrade
-					"Fairy Spawn Amount",
-					"Loose Fairy Spawn Amount",
-					"Glimmer Multiplier",
-					"Fairy Event Duration",
-				},
-				Limit = {
-					["Glimmer Multiplier"] = 1, -- max 10
-					["Loose Fairy Spawn Amount"] = 10, -- max 10
-					["Fairy Event Duration"] = 10, -- max 10
-					["Fairy Spawn Amount"] = 9, -- max 9
-				}
-			}
-		},
-		MaxMoney_Restocks = 5_000_000_000_000,
-		Shop = { -- un comment to buy
-			"Enchanted Chest",
-			"Enchanted Egg",
-			"Enchanted Seed Pack",
-			"Mutation Spray Glimmering",
-			"Drake",
-			"Wisp",
-			"Luminous Sprite",
-			"Wisp Well",
+        task.wait(5)
+    end
+end
 
-			"Sprout Seed Pack",
-			"Sprout Egg",
-			-- "Mandrake",
-			-- "Silver Fertilizer",
-			-- "Canary Melon",
-			-- "Amberheart",
-			-- ["Spriggan"] = 8,
-			-- Friend Shop
-			"Skyroot Chest",
-		},
-		Craft = {
-			"Fairy Summoner",
-			"Fairy Power Extender",
-			"Fairy Caller",
-			"Enchanted Chest",
-			"Enchanted Egg",
-			"Anti Bee Egg",
-			"Sprout Egg",
-			"Mutation Spray Glimmering",
-			"Fairy Net",
-		},
-		["Traveling Shop"] = {
-			"Bee Egg",
-			"Paradise Egg",
-			"Rare Summer Egg", 
-			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
-		},
-		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
-	},
+task.spawn(CheckAndWrite)
 
-	Gear = {
-		Buy = { 
-			"Harvest Tool",
-			"Master Sprinkler",
-			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
-			"Lightning Rod",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
-		},
-		Lock = {
-			"Grandmaster Sprinkler",
-			"Godly Sprinkler",
-			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
-		},
-	},
+-- Script 3: Auto load heart farm sau 90s
+task.spawn(function()
+    task.wait(90)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/diwserenityhub/other/refs/heads/main/heart_farm.lua"))()
+end)
 
-	Eggs = {
-		Place = {
-			"Gourmet Egg",
-			"Enchanted Egg",
-			"Sprout Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
-			"Anti Bee Egg",
-			"Bee Egg",
-			"Night Egg",
-			"Bug Egg",
-			"Paradise Egg",
-			"Rare Egg",
-		},
-		Buy = {
-			"Bee Egg",
-			"Enchanted Egg",
-			"Oasis Egg",
-			"Paradise Egg",
-			"Anti Bee Egg",
-			"Night Egg",
-			"Rare Summer Egg",
-			"Bug Egg",
-			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
-			"Legendary Egg",
-			"Rare Egg",
-		}
-	},
-
-	Pets = {
-		["Auto Feed"] = true,
-		MutationPet = {
-			["Rooster"] = { "Glimmering" },
-			["Sunny-Side Chicken"] = { "Glimmering" },
-			["Glimmering Sprite"] = { "Glimmering" },
-			["Brown Mouse"] = { "Glimmering" },
-			["Grey Mouse"] = { "Glimmering" },
-			["Squirrel"] = { "Glimmering" },
-		},
-		["Start Delete Pet At"] = 40,
-		["Upgrade Slot"] = {
-			["Pet"] = {
-		["Squirrel"] =	{ 5, 100, 3, true },
-                ["Brown Mouse"] = { 3, 100, 4, true },
-                ["Grey Mouse"] = { 3, 100, 5, true },
-				["Ostrich"] = { 3, 100, 2, true },
-		["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-			},
-			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
-			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 3, 100, 1 },
-                ["Sunny-Side Chicken"] = { 5, 100, 2 },
-                ["Starfish"] = { 5, 100, 3 },
-				["Peach Wasp"] = { 1, 100, 4 },
-				["Wasp"] = { 1, 100, 5 },
-				["Squirrel"] =	{ 1, 100, 8 },
-				["Ostrich"] = { 3, 100, 7 },
-                ["Rooster"] = { 2, 100, 6 },
-			},
-		},
-		Unfavorite_AllPet = false,
-		Favorite_LockedPet = false,
-		Locked_Pet_Age = 60, -- pet that age > 60 will lock
-		Locked = {
-			"Griffin",
-			"Wisp",
-			["Shroomie"] = 8,
-			"Luminous Sprite",
-			"Phoenix",
-			["Glimmering Sprite"] = 8,
-			"Cockatrice",
-			"Drake",
-			"Gnome",
-			"Green Bean", 
-			"Apple Gazelle", 
-			"Lemon Lion", 
-			"Peach Wasp",
-			"Golden Goose",
-			"French Fry Ferret",
-			"Corrupted Kitsune",
-			"Raiju",
-			"Koi",
-			"Kitsune",
-			"Dilophosaurus",
-			"Moon Cat",
-			"Capybara",
-			"Chicken Zombie",
-			["Sunny-Side Chicken"] = 8,
-			["Rooster"] =  5,
-			"Spinosaurus",
-			"Bear Bee",
-			"T-Rex",
-			"Brontosaurus",
-			"Disco Bee",
-			"Butterfly",
-			"Queen Bee",
-			"Dragonfly",
-			"Raccoon",
-			"Fennec Fox",
-			"Mimic Octopus",
-			"Red Fox",
-			"Blood Owl",
-			["Seal"] = 8,
-			["Starfish"] = 8,
-		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
-	},
-
-    Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1414663810664370350/G6g5bvIdGV-IT2p4N5kb5tCic7mLd86yz-lvMjnSW74U3sDeQ9QvqSe2CJpzZXSshbbA",
-		UrlSeed = "XXX",
-		PcName = "ngunhucho",
-		Mention = "986783047057805323", -- discord id
-
-		Noti = {
-			Seeds = {
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
-			},
-			SeedPack = {
-				"Idk"
-			},
-			Pets = {
-				"Phoenix",
-				"Golden Goose",
-				"French Fry Ferret",
-				"Cockatrice",
-				"Kitsune",
-				"Spinosaurus",
-				"T-Rex",
-				"Disco Bee",
-				"Butterfly",
-				"Mimic Octopus",
-				"Queen Bee",
-				"Fennec Fox",
-				"Dragonfly",
-				"Raccoon",
-				"Red Fox",
-			},
-			Pet_Weight_Noti = true,
-		}
-	},
-}
-License = "FuVgE4Nd4HpzRHYSlBaJFpkw16cSfKc8"
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-
-
--- 🌟 Auto Fairy Event Script (Modified)
-local Players = game:GetService('Players')
-local Rep = game:GetService('ReplicatedStorage')
-local CollectionService = game:GetService('CollectionService')
-
-local localPlayer = Players.LocalPlayer
-local DataService = require(Rep.Modules.DataService)
-
-local CollectRemote = Rep.GameEvents.Crops.Collect
-local SubmitFairy = Rep.GameEvents.FairyService.SubmitFairyFountainAllPlants
-local CraftRemote = Rep.GameEvents.CraftingGlobalObjectService
-local FairyNetEvent = Rep.GameEvents.FairyNetActivated
-
-local benchFairy =
-    workspace.Interaction.UpdateItems.FairyGenius.FairyGeniusEventCraftingWorkBench
-
--- ⚙️ Config
-local HARVEST_INTERVAL = 1
-local CRAFT_INTERVAL = 2
-local FAIRY_SUBMIT_INTERVAL = 10
-local LIMIT = 20
-local FIRE_DELAY = 2
-local SUBMIT_DELAY = 1
-local USE_FARM_ONLY = true
-
--- Farm folder
-local farmFolder
-pcall(function()
-    if
-        workspace:FindFirstChild('Farm')
-        and workspace.Farm:FindFirstChild('Farm')
-    then
-        farmFolder = workspace.Farm.Farm
+-- Script 4: Ki?m tra UI load l?i sau 60s thì shutdown
+task.spawn(function()
+    wait(60)
+    if game:GetService("Players").LocalPlayer.PlayerGui.AssetLoadUI.Enabled == true then
+        game:Shutdown()
     end
 end)
 
--- 🟢 Utility
-local function getUUID(itemName)
-    for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            return item:GetAttribute('c')
-        end
-    end
-    for _, item in ipairs(localPlayer.Character:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            return item:GetAttribute('c')
-        end
-    end
-    return nil
-end
-
-local function countItem(itemName)
-    local count = 0
-    for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            count += 1
-        end
-    end
-    return count
-end
-
-local function hasCollectTag(obj)
-    if type(obj.HasTag) == 'function' then
-        local ok, res = pcall(function()
-            return obj:HasTag('CollectPrompt')
-        end)
-        if ok then
-            return res
-        end
-    end
-    return CollectionService:HasTag(obj, 'CollectPrompt')
-end
-
--- 🛠 Harvest
-local function harvestItem(itemName, limit)
-    local collected = 0
-    local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
-        or workspace:GetDescendants()
-
-    for _, inst in ipairs(descendants) do
-        if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
-            local crop = inst.Parent and inst.Parent.Parent
-            if crop and crop.Name == itemName then
-                CollectRemote:FireServer({ crop })
-                task.wait(FIRE_DELAY)
-                SubmitFairy:FireServer()
-                task.wait(SUBMIT_DELAY)
-                SubmitFairy:FireServer()
-
-                collected += 1
-                if collected >= limit then
-                    break
-                end
-            end
-        end
-    end
-end
-
-local function harvestGlimmering(limit)
-    local tier = (DataService:GetData() or {}).FairyQuests
-            and DataService:GetData().FairyQuests.WishLevel
-        or 0
-    if tier >= 5 then
+-- Script 5: Kick n?u không tang bucks
+task.spawn(function()
+    wait(30)
+    local oldBucks = GetBucks()
+    if oldBucks == nil then
+        LocalPlayer:Kick("Can't read bucks value.")
         return
     end
-    local collected = 0
-    local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
-        or workspace:GetDescendants()
 
-    for _, inst in ipairs(descendants) do
-        if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
-            local crop = inst.Parent and inst.Parent.Parent
-            if crop and crop:GetAttribute('Glimmering') then
-                CollectRemote:FireServer({ crop })
-                task.wait(FIRE_DELAY)
-                SubmitFairy:FireServer()
-                task.wait(SUBMIT_DELAY)
-                SubmitFairy:FireServer()
-
-                collected += 1
-                if collected >= limit then
-                    break
-                end
-            end
-        end
-    end
-end
-
--- 🧰 Craft
-local function craftItem(bench, benchType, recipe, items)
-    CraftRemote:FireServer('SetRecipe', bench, benchType, recipe)
-    for _, v in ipairs(items) do
-        local uuid = getUUID(v.Name)
-        if uuid then
-            CraftRemote:FireServer('InputItem', bench, benchType, v.slot, {
-                ItemType = v.Type,
-                ItemData = { UUID = uuid },
-            })
-        end
-    end
-    CraftRemote:FireServer('Craft', bench, benchType)
-    CraftRemote:FireServer('Claim', bench, benchType, 1)
-end
-
--- 🧪 Collect Fairy
-local player = localPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-local FairyEventVisuals = require(Rep.Modules.FairyEventVisualsController)
-
-local function equipItemContains(keyword)
-    for _, tool in ipairs(player.Character:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, keyword) then
-            return tool
-        end
-    end
-    for _, tool in ipairs(player.Backpack:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, keyword) then
-            tool.Parent = player.Character
-            return tool
-        end
-    end
-    return nil
-end
-
-local function collectNearbyFairies()
-    local fairies = FairyEventVisuals:GetAllFairies()
-    local nearby = {}
-    for _, fairy in ipairs(fairies) do
-        if (fairy.Position - hrp.Position).Magnitude <= 10 then
-            table.insert(nearby, fairy.Id)
-        end
-        if #nearby >= 3 then
+    while true do
+        task.wait(300)
+        local newBucks = GetBucks()
+        if newBucks == nil then
+            LocalPlayer:Kick("Can't read bucks value.")
             break
         end
-    end
-    if #nearby > 0 then
-        local net = equipItemContains('Fairy Net')
-        if net then
-            FairyNetEvent:FireServer(nearby)
-            local sound = net:FindFirstChild('CollectSound')
-            if sound then
-                sound:Play()
-            end
+        if newBucks <= oldBucks then
+            LocalPlayer:Kick("No bucks increase detected.")
+            break
         end
-    end
-end
-
--- 🔄 Main Loops
--- 1️⃣ Harvest + Craft
-task.spawn(function()
-    while task.wait(HARVEST_INTERVAL) do
-        harvestItem('Sunbulb', LIMIT)
-        harvestGlimmering(LIMIT)
-
-        craftFairyNet() -- chỉ còn craft Fairy Net
+        oldBucks = newBucks
     end
 end)
-
--- 2️⃣ Collect Fairy + Fake Teleport
-task.spawn(function()
-    while task.wait(1) do
-        if equipItemContains('Fairy Net') then
-            for i = 1, 10 do
-                local folder = workspace:FindFirstChild(tostring(i))
-                if folder then
-                    for _, obj in ipairs(folder:GetChildren()) do
-                        local objCF
-                        if obj:IsA('Model') and obj.PrimaryPart then
-                            objCF = obj:GetPivot()
-                        elseif obj:IsA('Part') then
-                            objCF = obj.CFrame
-                        end
-                        if objCF then
-                            local objPos = objCF.Position
-                            local forward = objCF.LookVector * 4
-                            local targetPos = objPos
-                                + forward
-                                + Vector3.new(0, 1, 0)
-                            hrp.CFrame = CFrame.new(targetPos, objPos)
-                            workspace.CurrentCamera.CFrame = CFrame.new(
-                                objPos + Vector3.new(0, 10, 15),
-                                objPos
-                            )
-                            collectNearbyFairies()
-                            task.wait(0.5)
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
-local Players = game:GetService('Players')
-local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local player = Players.LocalPlayer
-
--- 🟢 NPC cần đứng gần
-local npc =
-    workspace.Interaction.UpdateItems.FairyIsland.FairyIsland['Luminous Sprite']
-
--- 🟢 Lấy nhân vật
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild('HumanoidRootPart')
-
--- 🟢 Auto vòng lặp
-task.spawn(function()
-    while task.wait(30) do
-        -- Teleport vào Fairy World trước
-        ReplicatedStorage.GameEvents.FairyService.TeleportFairyWorld:FireServer()
-        print('🌌 Đã teleport vào Fairy World!')
-
-        task.wait(2) -- chờ 1–2s để server load map Fairy World
-
-        -- Tele đứng cách NPC, nhìn thẳng vào NPC
-        local npcPos = npc.PrimaryPart.Position
-        local targetPos = npcPos + Vector3.new(0, 6, 0) -- đứng cách NPC 5 studs
-        hrp.CFrame = CFrame.lookAt(targetPos, npcPos, Vector3.new(0, 1, 0))
-
-        -- Nộp tất cả fairy jar
-        ReplicatedStorage.GameEvents.FairyService.FairySubmitAllJar:FireServer()
-        print('📦 FairySubmitAllJar đã gửi!')
-
-        -- Mua Enchanted Chest x2
-        local args1 = { 'Enchanted Chest', 2 }
-        ReplicatedStorage.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
-        print('💎 Đã mua Enchanted Chest x2!')
-
-        -- Mua Luminous Sprite x2
-        local args2 = { 'Luminous Sprite', 2 }
-        ReplicatedStorage.GameEvents.BuyEventShopStock:FireServer(unpack(args2))
-        print('✨ Đã mua Luminous Sprite x2!')
-    end
-end)
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-while task.wait(1) do
-    for i = 1, 20 do
-        local point = workspace:FindFirstChild('RewardPoint' .. i)
-        if point then
-            -- Lấy vị trí pivot
-            local objCF
-            if point:IsA('Model') and point.PrimaryPart then
-                objCF = point:GetPivot()
-            elseif point:IsA('BasePart') then
-                objCF = point.CFrame
-            end
-
-            if objCF then
-                local objPos = objCF.Position
-                print('➡️ Teleport tới:', point.Name)
-
-                -- Tele ra trước 3 studs, cao hơn 1 stud
-                local forward = objCF.LookVector * 3
-                local targetPos = objPos + forward + Vector3.new(0, 1, 0)
-                hrp.CFrame = CFrame.new(targetPos, objPos)
-
-                -- Camera follow
-                workspace.CurrentCamera.CFrame =
-                    CFrame.new(objPos + Vector3.new(0, 10, 15), objPos)
-
-                -- ⏳ Chờ tí rồi thử claim
-                task.wait(0.5)
-                local collected = tryCollect(point)
-                if collected then
-                    print('✅ Đã lấy RewardPoint:', point.Name)
-                else
-                    print('❌ Không có gì để lấy ở:', point.Name)
-                end
-            end
-        else
-            print('⚠️ Không tìm thấy RewardPoint' .. i)
-        end
-    end
-end
