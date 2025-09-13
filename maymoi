@@ -222,6 +222,7 @@ getgenv().ConfigsKaitun = {
 	Pets = {
 		["Auto Feed"] = true,
 		MutationPet = {
+			["Phoenix"] = { "Luminous" },
 			["Rooster"] = { "Glimmering" },
 			["Sunny-Side Chicken"] = { "Glimmering" },
 			["Glimmering Sprite"] = { "Glimmering" },
@@ -233,24 +234,16 @@ getgenv().ConfigsKaitun = {
 		["Upgrade Slot"] = {
 			["Pet"] = {
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Brown Mouse"] = { 1, 100 },
+				["Squirrel"] = { 1, 100 }, 
+				["Grey Mouse"] = { 1, 100 },
 			},
-			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
+			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Peach Wasp"] = { 1, 100, 1 },
 				["Wasp"] = { 1, 100, 2 },
                 ["Sunny-Side Chicken"] = { 5, 100, 3 },
                 ["Rooster"] = { 5, 100, 4 },
-			},
-		},
-			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
-			["Equip When Done"] = {
-			["Capybara"] = { 1, 100 },
-			["Rooster"] = { 5, 100, 1 },
-			["Sunny-Side Chicken"] = { 5, 100, 2 },
-            ["Starfish"] = { 1, 100 },
-            ["Brown Mouse"] = { 1, 100 },
-            ["Squirrel"] = { 1, 100 }, 
-            ["Grey Mouse"] = { 1, 100 },
 			},
 		},
 		Unfavorite_AllPet = false,
