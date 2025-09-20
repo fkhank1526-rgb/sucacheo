@@ -282,13 +282,12 @@ getgenv().ConfigsKaitun = {
         LockPet_Weight = 5, -- if Weight >= 10 they will locked
     },
 
- 	Webhook = {
+	Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1067146472463802388/RirvRrzdbaud-W9ycVlutkz4eYf843A23v_6pnHBi8TdPecxQABMEtGKSpbERoheRvhm",
 		UrlSeed = "xxx",
 		PcName = "nycaya",
 
 		Mention = "829343564320210965", -- discord id
-
         Noti = {
             Seeds = {
                 'Sunflower',
@@ -339,9 +338,20 @@ local SubmitAllRemote2 = Rep2.GameEvents.FallMarketEvent.SubmitAllPlants
 -- 🛒 Auto Buy (loop riêng, delay 5s để tránh spam)
 task.spawn(function()
     while task.wait(5) do
+        -- Mua Fall Egg
         local args1 = { "Fall Egg", 3 }
         Rep2.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
         print("🛒 Đã mua:", args1[1])
+
+        -- Mua Mallard
+        local args2 = { "Mallard", 3 }
+        game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("BuyEventShopStock"):FireServer(unpack(args2))
+        print("🛒 Đã mua:", args2[1])
+
+        -- Mua Red Panda
+        local args3 = { "Red Panda", 3 }
+        game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("BuyEventShopStock"):FireServer(unpack(args3))
+        print("🛒 Đã mua:", args3[1])
     end
 end)
 
