@@ -245,6 +245,8 @@ getgenv().ConfigsKaitun = {
         Favorite_LockedPet = false,
         Locked_Pet_Age = 60, -- pet that age > 60 will lock
         Locked = {
+            'Mallard',
+            'Red Panda',
             'Griffin',
             'Space Squirrel',
             'Barn Owl',
@@ -294,7 +296,7 @@ getgenv().ConfigsKaitun = {
         LockPet_Weight = 5, -- if Weight >= 10 they will locked
     },
 
- 	Webhook = {
+	Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1067146472463802388/RirvRrzdbaud-W9ycVlutkz4eYf843A23v_6pnHBi8TdPecxQABMEtGKSpbERoheRvhm",
 		UrlSeed = "xxx",
 		PcName = "nycaya",
