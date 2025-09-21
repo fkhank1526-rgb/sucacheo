@@ -233,6 +233,8 @@ getgenv().ConfigsKaitun = {
         Favorite_LockedPet = false,
         Locked_Pet_Age = 60, -- pet that age > 60 will lock
         Locked = {
+            'Mallard',
+            'Red Panda',
             'Griffin',
             'Space Squirrel',
             'Barn Owl',
@@ -288,6 +290,7 @@ getgenv().ConfigsKaitun = {
 		PcName = "nycaya",
 
 		Mention = "829343564320210965", -- discord id
+
         Noti = {
             Seeds = {
                 'Sunflower',
