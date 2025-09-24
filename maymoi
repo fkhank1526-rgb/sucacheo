@@ -313,7 +313,6 @@ getgenv().ConfigsKaitun = {
                 'Idk',
             },
             Pets = {
-				'Red Panda',
                 'Swan',
                 'Phoenix',
                 'Golden Goose',
@@ -358,11 +357,6 @@ task.spawn(function()
         local args1 = { "Fall Egg", 3 }
         Rep2.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
         print("🛒 Đã mua:", args1[1])
-
-        -- Mua Mallard
-        local args2 = { "Mallard", 3 }
-        game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("BuyEventShopStock"):FireServer(unpack(args2))
-        print("🛒 Đã mua:", args2[1])
 
         -- Mua Red Panda
         local args3 = { "Red Panda", 3 }
