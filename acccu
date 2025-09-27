@@ -7,7 +7,7 @@ getgenv().pvbConfig = {
     BRAINROT_RARITY_STOP_REBIRTH = {"Secret", "Limited"},
 
     BUY_SEED_SHOP = {["Cactus"] = 5, ["Strawberry"] = 5, ["Pumpkin"] = 5, ["Sunflower"] = 5, ["Dragon Fruit"] = 5, ["Eggplant"] = 5, ["Watermelon"] = 5, "Cocotank", "Carnivorous Plant", "Mr Carrot", "Tomatrio"},
-    KEEP_SEED =  { "Cocotank" = 2, "Carnivorous Plant" = 2, "Mr Carrot" = 2, "Tomatrio" =2 },
+    KEEP_SEED =  { ["Cocotank"] = 2, ["Carnivorous Plant"] = 2, ["Mr Carrot"] = 2, ["Tomatrio"] =2 },
     KEEP_PLANT = { },
     KEEP_PLANT_RARITY = {"Secret", "Limited"},
     KEEP_BRAINROT = { },
