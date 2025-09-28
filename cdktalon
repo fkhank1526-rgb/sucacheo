@@ -1,0 +1,46 @@
+getgenv().Key = "k16d71490e3eca3bde8f82ce"
+getgenv().BountyFarm = {
+    ["Script"] = {
+        ["Black Screen"] = true,
+        ["Team"] = "Pirates", -- Pirates/Marines
+        ["Panic % Health"] = 50, -- Teleport to Safe Zone if player below x % HP
+        ["Skip Timer"] = 60, -- Skip if took more than x seconds to kill
+        ["M1 Health"] = 90, -- Attack M1 if target health above x % HP
+        ["Ignore User"] = {"Portal-Portal"}, -- Ignore user with the ate Blox Fruit
+        ["Ignore Bounty"] = 30000000, -- Ignore user with higher than x bounty than you
+    },
+    ["Hop Server"] = {
+        ["Delay"] = 10, -- Delay before Hop Server
+        ["Region"] = {"Singapore, North West"}, -- Hop to Server with the region
+        ["Hop Ping"] = 1000, -- Hop if current server ping is higher than x 
+    },
+    ["Skill"] = {
+        -- 1: Randomize use skill
+        -- 2: Use skill in a cycle (making use used all skill)
+        -- 3: Prioritize use skill the first order
+        ["Use Type"] = 1,
+        ["Prioritize"] = {"Melee", "Sword"}, -- Use skill order - Left to right (first to last)
+        -- ["Skill"] = {Enable, Predict, Hold, Delay Next Skill}
+        ["Melee"] = {
+            ["Z"] = {true, true, 0, 2},
+            ["X"] = {true, true, 0, 1},
+            ["C"] = {true, true, 0, 4},
+        },
+        ["Blox Fruit"] = {
+            ["Z"] = {false, false, 0, 1},
+            ["X"] = {false, false, 0, 1},
+            ["C"] = {false, false, 0, 1},
+            ["V"] = {false, false, 0, 1},
+            ["F"] = {false, false, 0, 1},
+        },
+        ["Sword"] = {
+            ["Z"] = {true, true, 0, 5},
+            ["X"] = {true, true, 0, 3},
+        },
+        ["Gun"] = {
+            ["Z"] = {false, false, 0, 1},
+            ["X"] = {false, false, 0, 1},
+        },
+    },
+}
+loadstring(game:HttpGet("https://nousigi.com/loader.lua"))() 
