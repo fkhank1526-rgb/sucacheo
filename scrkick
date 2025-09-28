@@ -1,0 +1,2 @@
+wait(1800)
+game.Players.LocalPlayer:Kick("banned")
