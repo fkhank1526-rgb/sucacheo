@@ -1,0 +1,21 @@
+wait(5)
+local plr = game.Players.LocalPlayer
+local lastBounty = 0
+
+function checkBountyAndChange()
+    local currentBounty = plr.leaderstats["Bounty/Honor"].Value
+    if currentBounty >= 10000000 and currentBounty ~= lastBounty then
+        lastBounty = currentBounty
+        local fileName = plr.Name .. ".txt"
+        writefile(fileName, "Completed-10mbounty")
+        print("✅ Auto switched account! Created file:", fileName)
+    end
+end
+
+-- Loop check mỗi 30s
+task.spawn(function()
+    while true do
+        pcall(checkBountyAndChange)
+        wait(30)
+    end
+end)
