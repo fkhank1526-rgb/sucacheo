@@ -1,2 +1,3 @@
-script_key = "tlVvrFcRdXgFrCdTPpWerwOPHaEbGOPp" 
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/85e904ae1ff30824c1aa007fc7324f8f.lua"))()
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+getgenv().Key = "ae7d4ee0afdeec5e72a97333" 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))() 
