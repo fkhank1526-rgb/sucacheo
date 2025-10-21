@@ -15,7 +15,7 @@ local ClientData = ReplicatedStorage:WaitForChild("ClientModules"):WaitForChild(
 -- Script 2: Auto farm + webhook
 task.spawn(function()
     setfpscap(3)
-    script_key = "CqyciFlfLYGjwojrmVOfqIfhdlmveFvx"
+    script_key = "zCOUXXiuwgdHOkmQuhwzjcPnPnFLiHtt"
     getgenv().Config = {
         ["PetFarmAutoSwitchFullGrown"] = false,
         ["PetFarmActive"] = false,
