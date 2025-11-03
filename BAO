@@ -1,125 +1,42 @@
--- SCRIPT G?P - KHÔNG CH?NH S?A GÌ
-
--- Ð?i game t?i
-wait(5)
-
--- D?ch v? và bi?n co b?n
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local HttpService = game:GetService("HttpService")
-local LocalPlayer = Players.LocalPlayer
-
--- Ch? các Module c?n thi?t
-local ClientData = ReplicatedStorage:WaitForChild("ClientModules"):WaitForChild("Core"):WaitForChild("ClientData")
-
--- Script 2: Auto farm + webhook
-task.spawn(function()
-    setfpscap(3)
-    script_key = "zCOUXXiuwgdHOkmQuhwzjcPnPnFLiHtt"
-    getgenv().Config = {
-        ["PetFarmAutoSwitchFullGrown"] = false,
-        ["PetFarmActive"] = false,
-        ["EggFarmActive"] = false,
-        ["LitePetFarmActive"] = true,
-        ["Blur_username"] = false,
-        ["Blazing_Lion_Log"] = true,
-        ["DiscordId"] = "710726834240618526",
-        ["Webhook"] = "https://discord.com/api/webhooks/1286202963353931817/AeMMxeR_NKH9-PtdZx9bUjF3LfyyEw0fK4FR9c-Eg3It6Bay75oUVs-5n2Vnzx8j9A7y",
-    }
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/66567bfd337b57eb059b58dbe1badb89.lua"))()
-end)
-
--- Hàm l?y s? potion
-function GetPotions()
-    local Foods = {}
-    for l,o in pairs(require(ClientData).get_data()[LocalPlayer.Name].inventory.food) do
-        if o.id == "pet_age_potion" then
-            table.insert(Foods, l)
-        end
-    end
-    return #Foods
-end
-
--- Hàm l?y ti?n s? ki?n
-function GetEventCurrency()
-    return require(ClientData).get_data()[LocalPlayer.Name][require(ReplicatedStorage.SharedModules.SharedDB.AltCurrencyData)["name"]] or 0
-end
-
--- Hàm l?y bucks (kèm pcall d? tránh l?i)
-function GetBucks()
-    local success, result = pcall(function()
-        return require(ClientData).get_data()[LocalPlayer.Name].money
-    end)
-    if success and result ~= nil then
-        return result
-    else
-        return nil
-    end
-end
-
--- Hàm l?y t?ng stats
-local function GetStats()
-    if not game:IsLoaded() then
-        return ""
-    end
-    local currentData = {
-        potions = GetPotions(),
-        event_currency = GetEventCurrency(),
-        bucks = GetBucks(),
-    }
-    return currentData
-end
-
--- Script 1: Ki?m tra d? di?u ki?n ghi file
-function CheckAndWrite()
-    while true do
-        local potions = GetPotions()
-        local bucks = GetBucks()
-
-        if potions >= 100 and bucks and bucks >= 60000 then
-            writefile(LocalPlayer.Name..".txt", "Completed-AccHoanThanh-Potion+Money")
-        end
-
-        task.wait(5)
-    end
-end
-
-task.spawn(CheckAndWrite)
-
--- Script 3: Auto load heart farm sau 90s
-task.spawn(function()
-    task.wait(90)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/diwserenityhub/other/refs/heads/main/heart_farm.lua"))()
-end)
-
--- Script 4: Ki?m tra UI load l?i sau 60s thì shutdown
-task.spawn(function()
-    wait(60)
-    if game:GetService("Players").LocalPlayer.PlayerGui.AssetLoadUI.Enabled == true then
-        game:Shutdown()
-    end
-end)
-
--- Script 5: Kick n?u không tang bucks
-task.spawn(function()
-    wait(30)
-    local oldBucks = GetBucks()
-    if oldBucks == nil then
-        LocalPlayer:Kick("Can't read bucks value.")
-        return
-    end
-
-    while true do
-        task.wait(300)
-        local newBucks = GetBucks()
-        if newBucks == nil then
-            LocalPlayer:Kick("Can't read bucks value.")
-            break
-        end
-        if newBucks <= oldBucks then
-            LocalPlayer:Kick("No bucks increase detected.")
-            break
-        end
-        oldBucks = newBucks
-    end
-end)
+setfpscap(5)
+script_key = "auzzdBRFaVDxAUzDxhCCTxhqRaycDzLL";
+task.wait(10) -- DO NOT remove this wait, it's against double counts.
+-- INSERT YOUR CONFIG HERE --
+getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
+getgenv().GHALLOWEEN_JOIN_LOCAL = true
+getgenv().GHALLOWEEN_OPEN_HOUSE_6 = false
+getgenv().GDO_HALLOWEEN_WORLD = true
+getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = {1,2,3,4}
+getgenv().GHALLOWEEN_WORLD_RECIPES_TO_DO = {1,2,3,4,5}
+getgenv().GKEEP_CURRENCY_FOR_CRAFTS = "20m"
+getgenv().GALLOW_HOPPING = true
+getgenv().GHOP_ON_STAFF = true
+getgenv().GHALLOWEEN_WORLD_BUY_FROM_HOUSES_BELOW = false
+getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 1
+getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = true
+getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
+getgenv().GEVENT_UPGRADES = {
+    'HalloweenCandyMultiplier',
+    'HalloweenEggLuck',
+    'HalloweenTrickOrTreatLuck',
+    'HalloweenMoreDiamonds',
+    'HalloweenMoreWitchHats',
+    'HalloweenHugeLuck',
+    'HalloweenTitanicLuck',
+} --you can put the comment symbols (these 2 dashes): -- in front of the ones you don't want to upgrade
+getgenv().GWEBHOOK_USERID = "829343564320210965"
+getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1067146472463802388/RirvRrzdbaud-W9ycVlutkz4eYf843A23v_6pnHBi8TdPecxQABMEtGKSpbERoheRvhm"
+getgenv().GMAIL_RECEIVERS = {"Cam3ronD3an2006"} -- for Huges and mailrules.
+getgenv().GMAIL_ITEMS = {
+["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
+["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "50m"}, -- mail diamonds, to enable lower MinAmount..
+["Hype Egg 2"] = {Class = "Lootbox", Id = "Hype Egg 2", MinAmount = 1},
+["Daycare egg 5"] = {Class = "Egg", Id = "Huge Machine Egg 5", MinAmount = 1},
+["Secret pet1"] = {Class = "Pet", Id = "Rainbow Swirl", MinAmount = 1, AllVariants = true},
+["Secret pet2"] = {Class = "Pet", Id = "Banana", MinAmount = 1, AllVariants = true},
+["Secret pet3"] = {Class = "Pet", Id = "Coin", MinAmount = 1, AllVariants = true},
+["Secret pet4"] = {Class = "Pet", Id = "Yellow Lucky Block", MinAmount = 1, AllVariants = true},
+["Brainrot egg"] = {Class = "Egg", Id = "Exclusive Egg 56", MinAmount = 1},
+}
+getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
