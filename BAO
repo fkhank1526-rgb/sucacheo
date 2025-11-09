@@ -26,7 +26,7 @@ getgenv().GEVENT_UPGRADES = {
 } --you can put the comment symbols (these 2 dashes): -- in front of the ones you don't want to upgrade
 getgenv().GWEBHOOK_USERID = "829343564320210965"
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1067146472463802388/RirvRrzdbaud-W9ycVlutkz4eYf843A23v_6pnHBi8TdPecxQABMEtGKSpbERoheRvhm"
-getgenv().GMAIL_RECEIVERS = {"Cam3ronD3an2006"} -- for Huges and mailrules.
+getgenv().GMAIL_RECEIVERS = {"Grace_Damon2007"} -- for Huges and mailrules.
 getgenv().GMAIL_ITEMS = {
 ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
 ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "50m"}, -- mail diamonds, to enable lower MinAmount..
