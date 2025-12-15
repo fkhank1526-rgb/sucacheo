@@ -26,4 +26,44 @@ task.spawn(function()
     end
 end)
 
+
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/493f6c6b0b036f044d46ffb43292b15e.lua"))()
+getgenv().PlayerAdded = function(plr)
+    if plr.Character and not plr.Character:FindFirstChild("eochuadaodayvailuwuwuuwwuwuwuuwuwuwu") and
+        plr.Character:FindFirstChild("Humanoid") then
+        Instance.new("Part", plr.Character).Name = "eochuadaodayvailuwuwuuwwuwuwuuwuwuwu"
+        plr.Character.Humanoid.AnimationPlayed:Connect(function(a)
+            local content = a.Animation.AnimationId
+            if string.match(content, "honglam") then
+                local canret = false
+                content = content:gsub(".", function(a)
+                    if canret then
+                        return a
+                    end
+                    if a == "=" then
+                        canret = true
+                    end
+                    return ""
+                end)
+                content = content:gsub("honglam", "")
+                content = content:sub(2)
+                if content == getgenv().tngoccutii then
+                    if not table.find(getgenv().save, plr.Name) then
+                        table.insert(getgenv().save, plr.Name)
+                        getgenv().ready = getgenv().ready + 1
+                        task.wait(1)
+                        print(plr.Name, content)
+                        SendMessage(content)
+                    end
+                    if not table.find(getgenv().pass, plr.Name) then
+                        table.insert(getgenv().pass, plr.Name)
+                        task.wait(1)
+                    end
+                elseif content == "Rejoin" .. getgenv().tngoccutii then
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
+                        game.Players.LocalPlayer)
+                end
+            end
+        end)
+    end
+end
