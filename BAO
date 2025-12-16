@@ -17,11 +17,11 @@ _G.FishItConfig = _G.FishItConfig or {
     },
     ["Selling"] = {
         ["Auto Sell"] = true,
-        ["Auto Sell Threshold"] = "Legendary",
+        ["Auto Sell Threshold"] = "Mythic",
         ["Auto Sell Every"] = 100,
     },
     ["Doing Quest"] = {
-        ["Auto Ghostfinn Rod"] = true,
+        ["Auto Ghostfinn Rod"] = false,
         ["Auto Element Rod"] = false,
         ["Allowed Sacrifice"] = {
             "Blob Shark",
@@ -59,7 +59,7 @@ _G.FishItConfig = _G.FishItConfig or {
     ["Enchant"] = {
         ["Auto Enchant"] = true,
         ["Roll Enchant"] = false, -- Roll enchant until get Leprechaun II
-        ["Minimum Rod"] = "Astral Rod",
+        ["Minimum Rod"] = "Ghostfinn Rod",
         ["Enchant List"] = {
             "Prismatic I",
         },
@@ -95,7 +95,7 @@ _G.FishItConfig = _G.FishItConfig or {
     ["UltimatePerformance"] = true,
     ["Disable3DRender"] = true,
     ["AutoRemovePlayer"] = true,
-    ["AutoReconnect"] = true,
+    ["AutoReconnect"] = false,
     ["Debug"] = true,
 }
 script_key="5F82409035A3EA3F933D1FE9711D88A5";
