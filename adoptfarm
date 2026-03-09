@@ -1,0 +1,103 @@
+-- SCRIPT G?P - KHÔNG CH?NH S?A GÌ
+
+-- Ð?i game t?i
+wait(5)
+setfpscap(3)
+-- D?ch v? và bi?n co b?n
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = Players.LocalPlayer
+
+-- Ch? các Module c?n thi?t
+local ClientData = ReplicatedStorage:WaitForChild("ClientModules"):WaitForChild("Core"):WaitForChild("ClientData")
+
+-- Script 2: Auto farm + webhook
+task.spawn(function()
+    setfpscap(3)
+    script_key = "FOpCVzbadIoJvQvlJXDombJIBtNYdETP"
+    getgenv().Config = {
+        ["PetFarmAutoSwitchFullGrown"] = false,
+        ["PetFarmActive"] = false,
+        ["EggFarmActive"] = false,
+        ["LitePetFarmActive"] = true,
+        ["Blur_username"] = false,
+        ["Blazing_Lion_Log"] = true,
+        ["DiscordId"] = "829343564320210965",
+        ["Webhook"] = "https://discord.com/api/webhooks/1455663407046066287/5j7IaJ9_Dhkb4VeNUoXgUZavSkRDyeIy77Oc6bqtoRy_KAJ_LFtoMpgowplsjsFr97q6",
+    }
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/66567bfd337b57eb059b58dbe1badb89.lua"))()
+end)
+
+-- Hàm l?y s? potion
+function GetPotions()
+    local Foods = {}
+    for l,o in pairs(require(ClientData).get_data()[LocalPlayer.Name].inventory.food) do
+        if o.id == "pet_age_potion" then
+            table.insert(Foods, l)
+        end
+    end
+    return #Foods
+end
+
+-- Hàm l?y ti?n s? ki?n
+function GetEventCurrency()
+    return require(ClientData).get_data()[LocalPlayer.Name][require(ReplicatedStorage.SharedModules.SharedDB.AltCurrencyData)["name"]] or 0
+end
+
+-- Hàm l?y bucks (kèm pcall d? tránh l?i)
+function GetBucks()
+    local success, result = pcall(function()
+        return require(ClientData).get_data()[LocalPlayer.Name].money
+    end)
+    if success and result ~= nil then
+        return result
+    else
+        return nil
+    end
+end
+
+-- Hàm l?y t?ng stats
+local function GetStats()
+    if not game:IsLoaded() then
+        return ""
+    end
+    local currentData = {
+        potions = GetPotions(),
+        event_currency = GetEventCurrency(),
+        bucks = GetBucks(),
+    }
+    return currentData
+end
+
+-- Script 4: Ki?m tra UI load l?i sau 60s thì shutdown
+task.spawn(function()
+    wait(60)
+    if game:GetService("Players").LocalPlayer.PlayerGui.AssetLoadUI.Enabled == true then
+        game:Shutdown()
+    end
+end)
+
+-- Script 5: Kick n?u không tang bucks
+task.spawn(function()
+    wait(30)
+    local oldBucks = GetBucks()
+    if oldBucks == nil then
+        LocalPlayer:Kick("Can't read bucks value.")
+        return
+    end
+
+    while true do
+        task.wait(300)
+        local newBucks = GetBucks()
+        if newBucks == nil then
+            LocalPlayer:Kick("Can't read bucks value.")
+            break
+        end
+        if newBucks <= oldBucks then
+            LocalPlayer:Kick("No bucks increase detected.")
+            break
+        end
+        oldBucks = newBucks
+    end
+end)
