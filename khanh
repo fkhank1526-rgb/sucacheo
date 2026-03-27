@@ -19,6 +19,8 @@ getgenv().FNR_Config = {
         "Common Chest",
         "Rare Chest",
         "Epic Chest",
+        "Mythical Chest",
+        "Secret Chest",
     },
     AutoBlessing = true,
 
