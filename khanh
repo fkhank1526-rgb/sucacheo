@@ -1,60 +1,52 @@
-FNR_Key = "97a292e965cf861efee2256850d5a2ec"
+FNR_Key="97a292e965cf861efee2256850d5a2ec"
 getgenv().FNR_Config = {
-    ["Level"] = {
-        ["Auto Farm"] = true,
-        ["Level Cap"] = 375,
-    },
-    ["Misc Farm"] = {
-        ["Auto Buso"] = false,
-        ["Auto Geppo"] = true,
-        ["Auto World Scroll"] = false,
-    },
-    ["Auto Stats"] = {
-        ["Strength"] = 675,
-        ["Stamina"] = 0,
-        ["Defense"] = 1375,
-        ["GunMastery"] = 0,
-        ["SwordMastery"] = 0,
-    },
-    ["Fishing"] = {
-        ["Auto Farm"] = true,
-        ["Use Baits"] = {
-            ["Common Fish Bait"] = true,
-            ["Rare Fish Bait"] = true,
-            ["Legendary Fish Bait"] = true,
-        },
-        ["Auto Sell"] = { "Common Fish", "Rare Fish", "Legendary Fish" },
-        ["Craft Cap"] = 10,
-        ["Auto Craft"] = { "Legendary Fish" },
-    },
-    ["Merchant"] = {
-        ["Auto Farm"] = true,
-        ["Find For Banana Rod"] = true,
-        ["Items"] = {
-            ["All Seeing Shamrock"] = true,
-            ["Mythical Fruit Chest"] = true,
-            ["Merchants Banana Rod"] = true,
-        },
-    },
-    ["Auto ADS"] = true,
-    ["Private Code"] = "PutPrivateCode",
-    ["Multiple Private Code"] = {
-        ["Ps Code 1"] = "User1,User2",
-        ["Ps Code 2"] = "User3,User4",
-    },
-    ["Private Place"] = "First Sea",
-    ["Webhook Options"] = {
-        ["URL"] = "https://discord.com/api/webhooks/1455663407046066287/5j7IaJ9_Dhkb4VeNUoXgUZavSkRDyeIy77Oc6bqtoRy_KAJ_LFtoMpgowplsjsFr97q6",
-        ["Send When Max Level"] = false,
-        ["Send When Max Peli"] = false,
-        ["Send When Go To Merchant"] = true,
-        ["Send When Got Banned"] = false,
-        ["Send When Private Code Invalid"] = false,
-        ["Ping Everyone"] = true,
-    },
-    ["Black Screen"] = true,
-    ["Low CPU"] = true,
-    ["Tween Speed"] = 40,
-}
 
-loadstring(game:HttpGet("https://api.fennirhub.net/scripts/1890189ac46875cec307ef51554087fb"))()
+    ---------- [ FARMING ] ----------
+    AutoFarm = true,
+    AutoQuest = true,
+    AutoStats = true,
+    AutoBuyWeapons = true,
+    AutoSaber = true,
+    AutoIchigo = true,
+    AutoHaki = true,
+    AutoHogyoku = true,
+    AutoAscend = true,
+    AutoSukuna = true,
+
+    ---------- [ ITEMS & CHEST ] ----------
+    AutoOpenChest = true,
+    OpenChests = {
+        "Common Chest",
+        "Rare Chest",
+        "Epic Chest",
+    },
+    AutoBlessing = true,
+
+    ---------- [ REROLL ] ----------
+    AutoReroll = true,
+    TargetRace = "Kitsune",
+    TargetClan = "",
+    AutoTraitReroll = false,
+    TargetTraitRarity = "Secret",
+    RerollOnlyWithTitle = false,
+    RerollRequiredTitle = "Destiny Marked",
+
+    ---------- [ TITLE & ACCESSORY ] ----------
+    AutoEquipTitle = true,
+    AutoEquipAccessory = true,
+
+    ---------- [ ARTIFACT & SKILL TREE ] ----------
+    AutoEquipArtifact = true,
+    AutoSkillTree = true,
+    SkillTreePriority = { "Luck", "Damage", "CritChance", "CritDamage", "HP" },
+    FullSkillTreeDamage = false,
+
+    ---------- [ MISC ] ----------
+    AutoRedeemCodes = true,
+    WebhookURL = "https://discord.com/api/webhooks/1453633393395896477/gWVQaj_hVvGiZDDmpIHjnhpqO58lViWBtkhPIdGFxf9-i0XeM_hlEw2kLsF4yJT6bPfe",
+
+    ---------- [ PERFORMANCE ] ----------
+    FPSBoost = true,
+    FPSLock = 10,
+}
+loadstring(game:HttpGet('https://api.fennirhub.net/scripts/b438352497eee0e138daa805f0702536'))()
