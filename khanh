@@ -19,6 +19,7 @@ getgenv().FNR_Config = {
         "Common Chest",
         "Rare Chest",
         "Epic Chest",
+        "Legendary Chest",
         "Mythical Chest",
         "Secret Chest",
     },
