@@ -25,7 +25,7 @@ getgenv().FNR_Config = {
     AutoBlessing = true,
 
     ---------- [ REROLL ] ----------
-    AutoReroll = true,
+    AutoReroll = false,
     TargetRace = "Kitsune",
     TargetClan = "",
     AutoTraitReroll = false,
