@@ -10,9 +10,7 @@ getgenv().sailorPieceConfig = {
     SUMMON_BOSS = { "Ichigo", "Qin Shi", "Saber" },
     AUTO_REPLAY_DUNGEON = true,
     AUTO_INFINITE_TOWER = true,
-    Dungeon : "CidDungeon", "RuneDungeon", "DoubleDungeon", "BossRush"
-    Difficulty : "Easy", "Medium", "Hard", "Extreme"
-    How to use : AUTO_DUNGEON = { ["CidDungeon"] = "Easy"}
+    AUTO_DUNGEON = { ["CidDungeon"] = "Easy", ["RuneDungeon"] = "Easy"}
     EQUIP_SWORD = { "Ichigo", "Gryphon", "Dark Blade", "Katana" },
     BLESS_WEAPON = { ["Ichigo"] = 10, ["Gryphon"] = 6, ["Dark Blade"] = 3 },
 
